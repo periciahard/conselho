@@ -140,3 +140,30 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 
   @page{size:A4;margin:12mm}
   body{background:#fff;color:#111}.topbar,.local-banner,.sidebar,.report-toolbar,.section-heading,.student-header{display:none!important}.workspace,.wide-workspace{display:block!important}.main-panel{padding:0!important;background:#fff!important}.view{max-width:none!important}.report-content{display:block!important}.report-summary{grid-template-columns:repeat(4,1fr);break-inside:avoid}.report-summary article,.report-student{box-shadow:none}.report-class{break-before:page}.report-class:first-of-type{break-before:auto}.report-student{break-inside:avoid;margin-bottom:8px}.report-student-head{grid-template-columns:1.4fr repeat(3,.55fr);padding:10px 12px}.report-detail{padding:10px 12px}.report-notes li{background:#fff;border:1px solid #ddd}.report-chip{border:1px solid #ccd7e0;background:#fff}
 }
+
+
+/* Ajustes v10: cabeçalho compacto, pergunta responsiva e exclusão de avaliações */
+.local-banner{justify-content:flex-end;background:#fff;border-bottom:1px solid var(--line);color:var(--muted)}
+.local-banner #modeBadge,.local-banner #baseSummary{display:none!important}
+.term-switcher{margin-left:0;color:var(--muted)}
+.term-switcher select{border-color:var(--line);color:var(--navy)}
+.question-card{min-width:0}
+.question-card .question-title{margin:0 0 5px;font-size:18px;font-weight:800;line-height:1.25;overflow-wrap:anywhere}
+.question-card .question-title b{color:var(--danger)}
+.teacher-evaluations-card{margin-top:16px}
+.teacher-evaluations{display:grid;gap:9px;margin-top:14px}
+.teacher-evaluation-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 14px;border:1px solid var(--line);border-radius:13px;background:#fbfcfd}
+.teacher-evaluation-main{min-width:0}
+.teacher-evaluation-main strong{display:block;font-size:13px;color:var(--navy)}
+.teacher-evaluation-main span,.teacher-evaluation-main small{display:block;margin-top:3px;color:var(--muted);font-size:10px}
+.teacher-evaluation-row .danger{flex:0 0 auto;border-color:#e4b7b7;color:var(--danger)}
+.evaluation-empty{padding:16px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:11px;text-align:center}
+@media(max-width:650px){
+  .local-banner{align-items:center;flex-direction:row;justify-content:flex-end;padding:8px 14px}
+  .term-switcher{width:auto;max-width:100%;justify-content:flex-end}
+  .term-switcher span{white-space:nowrap}
+  .term-switcher select{max-width:180px}
+  .question-card .question-title{font-size:16px;line-height:1.3}
+  .teacher-evaluation-row{align-items:stretch;flex-direction:column}
+  .teacher-evaluation-row .danger{width:100%}
+}

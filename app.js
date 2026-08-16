@@ -419,6 +419,51 @@
       const pct = percentage(count, result.total);
       return `<div class="bar-row"><div><strong>${difficulty.title}</strong><span>${count} de ${result.total}</span></div><div class="bar-track" aria-label="${difficulty.title}: ${pct}%"><i style="width:${pct}%"></i></div><b>${pct}%</b></div>`;
     }).join('');
+
+    const rows = [...result.rows].sort((a, b) => (a.teacherName || a.teacher || '').localeCompare(b.teacherName || b.teacher || '', 'pt-BR'));
+    if (!rows.length) {
+      $('teacherEvaluations').innerHTML = '<div class="evaluation-empty">Nenhuma avaliação registrada para este estudante neste trimestre.</div>';
+    } else {
+      $('teacherEvaluations').innerHTML = rows.map((row) => {
+        const teacherName = row.teacherName || row.teacher || 'Professor';
+        const priorityLabel = row.priority ? 'Prioritário' : 'Não prioritário';
+        const difficultyCount = Array.isArray(row.difficulties) ? row.difficulties.length : 0;
+        const updated = row.updatedAt ? new Date(row.updatedAt).toLocaleString('pt-BR') : '—';
+        const canDelete = !cloudEnabled || teacher?.role === 'coordinator' || row.teacherKey === teacherKey();
+        return `<div class="teacher-evaluation-row">
+          <div class="teacher-evaluation-main"><strong>${escapeHtml(teacherName)}</strong><span>${escapeHtml(priorityLabel)} · ${difficultyCount} dificuldade${difficultyCount === 1 ? '' : 's'} marcada${difficultyCount === 1 ? '' : 's'}</span><small>Atualizada em ${escapeHtml(updated)}</small></div>
+          ${canDelete ? `<button type="button" class="secondary danger delete-evaluation-button" data-evaluation-id="${escapeHtml(row.id || '')}" data-teacher-key="${escapeHtml(row.teacherKey || '')}">Excluir avaliação</button>` : ''}
+        </div>`;
+      }).join('');
+    }
+    $('teacherEvaluationStatus').textContent = '';
+    $('teacherEvaluations').querySelectorAll('.delete-evaluation-button').forEach((button) => button.addEventListener('click', async () => {
+      const evaluationId = button.dataset.evaluationId;
+      const teacherKeyValue = button.dataset.teacherKey;
+      const row = rows.find((item) => (item.id && item.id === evaluationId) || (!item.id && item.teacherKey === teacherKeyValue));
+      if (!row) return;
+      const teacherName = row.teacherName || row.teacher || 'este professor';
+      const student = currentStudent();
+      if (!confirm(`Excluir a avaliação de ${teacherName} para ${student?.name || 'este estudante'} no ${termLabel()}?\n\nEsta ação remove somente essa avaliação.`)) return;
+      button.disabled = true;
+      $('teacherEvaluationStatus').textContent = 'Excluindo avaliação...';
+      try {
+        if (cloudEnabled) {
+          if (!row.id) throw new Error('Identificador da avaliação não encontrado.');
+          await cloud.deleteEvaluation(row.id);
+        }
+        evaluations = evaluations.filter((item) => item !== row && !(row.id && item.id === row.id));
+        if (!cloudEnabled) persistEvaluations();
+        renderStudentList();
+        renderClassProgress();
+        renderStudentHeader();
+        renderAnalysis();
+        $('teacherEvaluationStatus').textContent = 'Avaliação excluída com sucesso.';
+      } catch (error) {
+        $('teacherEvaluationStatus').textContent = `Não foi possível excluir: ${error.message}`;
+        button.disabled = false;
+      }
+    }));
   }
 
   function renderPriorities() {

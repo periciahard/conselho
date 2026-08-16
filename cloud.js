@@ -215,6 +215,13 @@ window.CF_CLOUD_READY = (async () => {
     return mapEvaluation(data);
   }
 
+  async function deleteEvaluation(evaluationId) {
+    if (!currentUser) throw new Error('Sua sessão expirou. Entre novamente.');
+    if (!evaluationId) throw new Error('Avaliação inválida.');
+    const { error } = await client.from('evaluations').delete().eq('id', evaluationId);
+    throwIfError(error);
+  }
+
   async function saveStudent(student) {
     if (!currentUser) throw new Error('Sua sessão expirou. Entre novamente.');
     let photoPath = student.photoPath || null;
@@ -295,7 +302,7 @@ window.CF_CLOUD_READY = (async () => {
     throwIfError(error);
   }
 
-  const api = { enabled, setupError, loginWithCode, getTeacher, loadData, saveEvaluation, saveStudent, deleteStudent, importSchoolData, archiveSchoolYear, subscribe, signOut };
+  const api = { enabled, setupError, loginWithCode, getTeacher, loadData, saveEvaluation, deleteEvaluation, saveStudent, deleteStudent, importSchoolData, archiveSchoolYear, subscribe, signOut };
   window.CF_CLOUD = api;
   return api;
 })();

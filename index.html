@@ -41,7 +41,7 @@
       </nav>
       <div class="user-area"><div class="user"><i id="userInitial">P</i><span><strong id="userName"></strong><small id="userEmail"></small><button id="logout">Trocar professor</button></span></div><button id="backupButton" class="icon-button" title="Exportar backup">Exportar</button><label class="icon-button import-label">Importar<input id="importInput" type="file" accept="application/json,.json"></label></div>
     </header>
-    <div class="local-banner"><strong id="modeBadge">Carregando</strong><span id="baseSummary">carregando estudantes...</span><label class="term-switcher"><span>Período avaliado</span><select id="termSelect"><option value="1">1º trimestre</option><option value="2">2º trimestre</option><option value="3">3º trimestre</option></select></label></div>
+    <div class="local-banner"><strong id="modeBadge" class="hidden">Carregando</strong><span id="baseSummary" class="hidden">carregando estudantes...</span><label class="term-switcher"><span>Período avaliado</span><select id="termSelect"><option value="1">1º trimestre</option><option value="2">2º trimestre</option><option value="3">3º trimestre</option></select></label></div>
 
     <div id="workspace" class="workspace">
       <aside id="sidebar" class="sidebar">
@@ -63,14 +63,14 @@
         <section id="evaluateView" class="view">
           <div class="section-heading"><div><p class="eyebrow">Sua percepção</p><h2>Avaliação individual</h2></div><span id="ownStatus">Ainda não avaliado por você</span></div>
           <form id="assessmentForm">
-            <fieldset class="card question-card">
-              <legend>O estudante é prioritário e necessita de intervenção? <b>*</b></legend>
+            <section class="card question-card">
+              <h3 class="question-title">O estudante é prioritário e necessita de intervenção? <b>*</b></h3>
               <p>Selecione uma opção para continuar.</p>
               <div class="radio-grid">
                 <label id="yesLabel"><input type="radio" name="priority" value="sim"><span><strong>Sim</strong><small>Exibir as perguntas sobre dificuldades.</small></span></label>
                 <label id="noLabel"><input type="radio" name="priority" value="nao"><span><strong>Não</strong><small>Salvar sem perguntas adicionais.</small></span></label>
               </div>
-            </fieldset>
+            </section>
             <section id="details" class="card hidden">
               <div class="question-heading"><div><p class="eyebrow">Detalhamento</p><h3>Quais dificuldades foram encontradas?</h3></div><span id="selectedCount">0 marcadas</span></div>
               <p class="helper">Marque todas as alternativas que se aplicam ao estudante.</p>
@@ -86,6 +86,11 @@
           <div class="section-heading"><div><p class="eyebrow">Visão consolidada</p><h2>Análise das respostas</h2></div><span>Percentuais atualizados automaticamente</span></div>
           <div class="metric-grid"><article><span>Professores participantes</span><strong id="metricTotal">0</strong><small>Total de avaliações</small></article><article class="blue"><span>Consideram prioritário</span><strong id="metricPriority">0%</strong><small id="priorityDetail">0 de 0 professores</small></article><article><span>Principal dificuldade</span><strong id="metricMain" class="metric-text">—</strong><small>Item com mais marcações</small></article></div>
           <article class="card chart-card"><div class="chart-heading"><div><h3>Dificuldades identificadas</h3><p>Percentual calculado sobre todos os professores que avaliaram este estudante.</p></div><span id="chartBase">Base: 0 professores</span></div><div id="bars" class="bars"></div><p class="chart-note">Como cada professor pode marcar várias alternativas, a soma dos percentuais pode ultrapassar 100%.</p></article>
+          <article class="card teacher-evaluations-card">
+            <div class="chart-heading"><div><h3>Avaliações por professor</h3><p>Consulte as respostas registradas e, quando necessário, exclua somente a avaliação selecionada.</p></div></div>
+            <div id="teacherEvaluations" class="teacher-evaluations"></div>
+            <p id="teacherEvaluationStatus" class="form-message" role="status"></p>
+          </article>
         </section>
 
         <section id="priorityView" class="view wide-view hidden">
@@ -138,7 +143,7 @@
   <script src="students.js"></script>
   <script src="supabase-config.js"></script>
   <script src="xlsx.mini.min.js?v=1"></script>
-  <script src="cloud.js?v=5"></script>
-  <script src="app.js?v=9"></script>
+  <script src="cloud.js?v=6"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>

@@ -14,3 +14,11 @@ A versão inclui três trimestres independentes, acesso de professores limitado 
 Antes de publicar, conclua as etapas da pasta `CONFIGURACAO-PRIVADA-NAO-PUBLICAR`, que deve permanecer fora do GitHub.
 
 O arquivo `supabase-config.js` usa apenas a chave publicável do projeto. Nunca inclua uma chave `service_role` ou `secret` no repositório.
+
+
+## Atualização v10
+
+- O resumo “Sincronizado / alunos ativos / turmas / Supabase” foi ocultado; permanece apenas o seletor de trimestre.
+- A pergunta inicial da avaliação foi ajustada para permanecer integralmente dentro do cartão em telas pequenas.
+- A Coordenação pode excluir uma avaliação específica na tela **Análises > Avaliações por professor**. Professores podem excluir apenas a própria avaliação quando essa ação estiver disponível.
+- Antes de usar a exclusão no Supabase, execute uma vez o arquivo `ATUALIZACAO-SUPABASE-EXCLUIR-AVALIACAO.sql` no SQL Editor. O arquivo não contém senhas nem chaves privadas.
