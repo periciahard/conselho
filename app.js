@@ -169,6 +169,19 @@
     window.setTimeout(() => $('teacherNameInput')?.focus(), 50);
   }
 
+  const passwordInput = $('schoolCodeInput');
+  const passwordToggle = $('togglePassword');
+  passwordToggle?.addEventListener('click', () => {
+    const showing = passwordInput.type === 'text';
+    passwordInput.type = showing ? 'password' : 'text';
+    passwordToggle.setAttribute('aria-pressed', String(!showing));
+    passwordToggle.setAttribute('aria-label', showing ? 'Mostrar senha' : 'Ocultar senha');
+    passwordToggle.setAttribute('title', showing ? 'Mostrar senha' : 'Ocultar senha');
+    const icon = passwordToggle.querySelector('.password-eye');
+    if (icon) icon.textContent = showing ? '👁' : '🙈';
+    passwordInput.focus({ preventScroll: true });
+  });
+
   $('welcomeEnter')?.addEventListener('click', openLoginFromWelcome);
   $('welcomeScreen')?.addEventListener('click', (event) => {
     if (event.target?.id !== 'welcomeEnter') openLoginFromWelcome();
