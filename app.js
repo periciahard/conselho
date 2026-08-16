@@ -146,6 +146,7 @@
   }
 
   function enterApp() {
+    $('welcomeScreen')?.classList.add('hidden');
     $('login').classList.add('hidden');
     $('app').classList.remove('hidden');
     $('userName').textContent = teacher.name;
@@ -161,6 +162,12 @@
     $('importInput').closest('label').classList.toggle('hidden', cloudEnabled);
     renderAll();
   }
+
+  $('welcomeEnter')?.addEventListener('click', () => {
+    $('welcomeScreen').classList.add('hidden');
+    $('login').classList.remove('hidden');
+    window.setTimeout(() => $('teacherNameInput')?.focus(), 50);
+  });
 
   $('loginForm').addEventListener('submit', async (event) => {
     event.preventDefault();
