@@ -22,3 +22,7 @@ O arquivo `supabase-config.js` usa apenas a chave publicável do projeto. Nunca 
 - A pergunta inicial da avaliação foi ajustada para permanecer integralmente dentro do cartão em telas pequenas.
 - A Coordenação pode excluir uma avaliação específica na tela **Análises > Avaliações por professor**. Professores podem excluir apenas a própria avaliação quando essa ação estiver disponível.
 - Antes de usar a exclusão no Supabase, execute uma vez o arquivo `ATUALIZACAO-SUPABASE-EXCLUIR-AVALIACAO.sql` no SQL Editor. O arquivo não contém senhas nem chaves privadas.
+
+
+## v13 — abertura responsiva
+A tela inicial foi reconstruída em HTML/CSS responsivo, com logo institucional separada, fundo em largura total e botão real de acesso.

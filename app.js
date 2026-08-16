@@ -163,10 +163,15 @@
     renderAll();
   }
 
-  $('welcomeEnter')?.addEventListener('click', () => {
-    $('welcomeScreen').classList.add('hidden');
-    $('login').classList.remove('hidden');
+  function openLoginFromWelcome() {
+    $('welcomeScreen')?.classList.add('hidden');
+    $('login')?.classList.remove('hidden');
     window.setTimeout(() => $('teacherNameInput')?.focus(), 50);
+  }
+
+  $('welcomeEnter')?.addEventListener('click', openLoginFromWelcome);
+  $('welcomeScreen')?.addEventListener('click', (event) => {
+    if (event.target?.id !== 'welcomeEnter') openLoginFromWelcome();
   });
 
   $('loginForm').addEventListener('submit', async (event) => {
