@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Conselho em Foco — plataforma de apoio ao conselho de classe de 2026.">
+  <meta name="theme-color" content="#12334d">
+  <title>Conselho em Foco | Conselho de Classe</title>
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body>
+  <main id="login" class="login-shell">
+    <section class="login-brand">
+      <div class="brand"><span>CF</span><strong>Conselho em Foco</strong></div>
+      <div><p class="eyebrow light">Conselho de classe 2026</p><h1>Cada olhar importa.<br>O conjunto orienta.</h1><p>Turmas, avaliações e relatórios reunidos em um ambiente compartilhado.</p></div>
+      <div class="privacy-note">Acesso restrito aos profissionais autorizados pela escola.</div>
+    </section>
+    <section class="login-form-wrap">
+      <form id="loginForm" class="login-card">
+        <p id="loginEyebrow" class="eyebrow">Acesso da equipe</p>
+        <h2>Entrar como professor</h2>
+        <p id="loginIntro">Use seu nome completo e a senha fornecida pela escola.</p>
+        <label><span>Login</span><input id="teacherNameInput" required minlength="5" maxlength="120" placeholder="Professor: nome completo" autocomplete="name"></label>
+        <label><span>Senha da escola</span><input id="schoolCodeInput" required type="password" minlength="8" maxlength="80" placeholder="Digite a senha padrão" autocomplete="current-password" autocapitalize="none" spellcheck="false"></label>
+        <p id="loginError" class="field-error" role="alert"></p>
+        <button id="loginButton" class="primary" type="submit"><span id="loginButtonText">Entrar na plataforma</span><span>→</span></button>
+        <small id="loginHelp">O código é compartilhado somente com a equipe autorizada.</small>
+      </form>
+    </section>
+  </main>
+
+  <main id="app" class="app hidden">
+    <header class="topbar">
+      <div class="brand"><span>CF</span><div><strong>Conselho em Foco</strong><small>Base local 2026</small></div></div>
+      <nav aria-label="Navegação principal">
+        <button id="navEvaluate" class="active" type="button">Avaliar</button>
+        <button id="navAnalysis" type="button">Análises</button>
+        <button id="navPriority" type="button">Prioritários</button>
+        <button id="navAdmin" type="button">Alunos</button>
+        <button id="navReport" type="button">Relatórios</button>
+      </nav>
+      <div class="user-area"><div class="user"><i id="userInitial">P</i><span><strong id="userName"></strong><small id="userEmail"></small><button id="logout">Trocar professor</button></span></div><button id="backupButton" class="icon-button" title="Exportar backup">Exportar</button><label class="icon-button import-label">Importar<input id="importInput" type="file" accept="application/json,.json"></label></div>
+    </header>
+    <div class="local-banner"><strong id="modeBadge">Carregando</strong><span id="baseSummary">carregando estudantes...</span><label class="term-switcher"><span>Período avaliado</span><select id="termSelect"><option value="1">1º trimestre</option><option value="2">2º trimestre</option><option value="3">3º trimestre</option></select></label></div>
+
+    <div id="workspace" class="workspace">
+      <aside id="sidebar" class="sidebar">
+        <div class="filters">
+          <label><span>Turma</span><select id="classSelect"></select></label>
+          <label><span>Buscar estudante</span><input id="searchInput" type="search" placeholder="Digite parte do nome"></label>
+          <div class="class-progress"><div><strong id="classProgressText">0 de 0 avaliados</strong><span id="classProgressPct">0%</span></div><div><i id="classProgressBar"></i></div></div>
+        </div>
+        <div id="studentList" class="student-list"></div>
+      </aside>
+
+      <section class="main-panel">
+        <header id="studentHeader" class="student-header">
+          <div id="studentPhotoWrap" class="photo-wrap"><img id="studentPhoto" alt=""><span id="studentInitials"></span><em id="noPhotoLabel">Sem foto confirmada</em></div>
+          <div class="student-title"><p id="studentContext" class="eyebrow"></p><h1 id="studentName"></h1><p id="studentNumber"></p></div>
+          <div class="response-count"><strong id="totalResponses">0</strong><span id="responseLabel">respostas · 2º tri</span></div>
+        </header>
+
+        <section id="evaluateView" class="view">
+          <div class="section-heading"><div><p class="eyebrow">Sua percepção</p><h2>Avaliação individual</h2></div><span id="ownStatus">Ainda não avaliado por você</span></div>
+          <form id="assessmentForm">
+            <fieldset class="card question-card">
+              <legend>O estudante é prioritário e necessita de intervenção? <b>*</b></legend>
+              <p>Selecione uma opção para continuar.</p>
+              <div class="radio-grid">
+                <label id="yesLabel"><input type="radio" name="priority" value="sim"><span><strong>Sim</strong><small>Exibir as perguntas sobre dificuldades.</small></span></label>
+                <label id="noLabel"><input type="radio" name="priority" value="nao"><span><strong>Não</strong><small>Salvar sem perguntas adicionais.</small></span></label>
+              </div>
+            </fieldset>
+            <section id="details" class="card hidden">
+              <div class="question-heading"><div><p class="eyebrow">Detalhamento</p><h3>Quais dificuldades foram encontradas?</h3></div><span id="selectedCount">0 marcadas</span></div>
+              <p class="helper">Marque todas as alternativas que se aplicam ao estudante.</p>
+              <div id="difficultyList" class="difficulty-list"></div>
+              <label class="notes"><span>Observações pedagógicas <small>(opcional)</small></span><textarea id="notes" rows="4" maxlength="2000" placeholder="Registre evidências, estratégias ou encaminhamentos sugeridos."></textarea></label>
+            </section>
+            <div id="noDetails" class="success-box hidden"><span>✓</span><div><strong>Pronto para salvar.</strong><p>As perguntas adicionais permanecem ocultas.</p></div></div>
+            <div class="form-actions"><p id="saveStatus" role="status"></p><div><button id="previousButton" class="secondary" type="button">← Anterior</button><button id="saveButton" class="primary" disabled>Salvar e próximo →</button></div></div>
+          </form>
+        </section>
+
+        <section id="analysisView" class="view hidden">
+          <div class="section-heading"><div><p class="eyebrow">Visão consolidada</p><h2>Análise das respostas</h2></div><span>Percentuais atualizados automaticamente</span></div>
+          <div class="metric-grid"><article><span>Professores participantes</span><strong id="metricTotal">0</strong><small>Total de avaliações</small></article><article class="blue"><span>Consideram prioritário</span><strong id="metricPriority">0%</strong><small id="priorityDetail">0 de 0 professores</small></article><article><span>Principal dificuldade</span><strong id="metricMain" class="metric-text">—</strong><small>Item com mais marcações</small></article></div>
+          <article class="card chart-card"><div class="chart-heading"><div><h3>Dificuldades identificadas</h3><p>Percentual calculado sobre todos os professores que avaliaram este estudante.</p></div><span id="chartBase">Base: 0 professores</span></div><div id="bars" class="bars"></div><p class="chart-note">Como cada professor pode marcar várias alternativas, a soma dos percentuais pode ultrapassar 100%.</p></article>
+        </section>
+
+        <section id="priorityView" class="view wide-view hidden">
+          <div class="section-heading"><div><p class="eyebrow">Acompanhamento pedagógico</p><h2>Alunos prioritários</h2><p id="priorityCopy" class="section-copy">Aparecem aqui os alunos ativos que receberam pelo menos uma indicação de prioridade no 2º trimestre.</p></div><strong id="priorityCount" class="count-pill">0 alunos</strong></div>
+          <div class="card priority-filters"><label><span>Turma</span><select id="priorityClassSelect"></select></label><label><span>Buscar aluno</span><input id="prioritySearchInput" type="search" placeholder="Digite parte do nome"></label></div>
+          <div id="priorityList" class="priority-list"></div>
+        </section>
+
+        <section id="adminView" class="view wide-view hidden">
+          <div class="section-heading"><div><p class="eyebrow">Administração escolar</p><h2>Gerenciar alunos e turmas</h2><p class="section-copy">Inclua, altere, arquive ou exclua cadastros e prepare o próximo ano letivo por Excel.</p></div><button id="newStudentButton" type="button" class="primary">+ Novo aluno</button></div>
+          <div class="admin-grid">
+            <article class="card admin-roster">
+              <div class="admin-filters"><select id="adminClassSelect"></select><input id="adminSearchInput" type="search" placeholder="Buscar aluno"><label><input id="showInactiveInput" type="checkbox"> Mostrar inativos</label></div>
+              <div id="adminStudentList" class="admin-student-list"></div>
+            </article>
+            <form id="studentForm" class="card student-form">
+              <div class="form-title"><div><p class="eyebrow">Ficha do aluno</p><h3 id="studentFormTitle">Novo aluno</h3></div><span id="studentActiveBadge" class="status-badge hidden">Ativo</span></div>
+              <input id="adminStudentId" type="hidden">
+                <div class="admin-photo-row"><div id="adminPhotoPreview" class="admin-photo-preview"><span>Foto</span></div><div><label class="file-button">Escolher foto<input id="adminPhotoInput" type="file" accept="image/jpeg,image/png,image/webp"></label><button id="removePhotoButton" type="button" class="text-button">Remover foto</button><small>A imagem será reduzida e enviada ao armazenamento privado.</small></div></div>
+              <div class="form-grid"><label class="full"><span>Nome completo</span><input id="adminNameInput" required maxlength="140"></label><label><span>Número na chamada</span><input id="adminNumberInput" required type="number" min="1" max="999"></label><label><span>Turma</span><select id="adminStudentClassInput" required></select></label></div>
+              <p id="studentFormStatus" class="form-message" role="status"></p>
+              <div class="admin-actions"><button id="deleteStudentButton" type="button" class="danger secondary hidden">Excluir definitivamente</button><button id="toggleStudentButton" type="button" class="danger secondary hidden">Arquivar aluno</button><button class="primary" type="submit">Salvar aluno</button></div>
+            </form>
+          </div>
+          <section class="card annual-management">
+            <div class="annual-heading"><div><p class="eyebrow">Virada do ano letivo</p><h3>Arquivar e importar turmas</h3><p>O arquivamento preserva todas as avaliações. A planilha cria as novas turmas e seus alunos.</p></div><a class="secondary template-link" href="modelo-importacao-turmas.xlsx" download>Baixar planilha-modelo</a></div>
+            <div class="annual-grid">
+              <label><span>Ano para arquivar</span><select id="archiveYearSelect"></select></label>
+              <button id="archiveYearButton" type="button" class="secondary danger">Arquivar ano selecionado</button>
+              <label class="file-button excel-file">Selecionar planilha Excel<input id="classImportInput" type="file" accept=".xlsx"></label>
+              <button id="importClassesButton" type="button" class="primary" disabled>Importar novas turmas</button>
+            </div>
+            <p id="classImportStatus" class="form-message" role="status"></p>
+            <div id="classYearSummary" class="year-summary"></div>
+          </section>
+        </section>
+
+        <section id="reportView" class="view wide-view hidden">
+          <div class="section-heading"><div><p class="eyebrow">Conselho de classe</p><h2>Relatórios consolidados</h2><p class="section-copy">Consulte os resultados por turma e por aluno no período selecionado.</p></div></div>
+          <div class="card report-toolbar">
+            <label><span>Turma do relatório</span><select id="reportClassSelect"></select></label>
+            <label class="report-check"><input id="reportNotesInput" type="checkbox" checked><span>Incluir observações pedagógicas</span></label>
+            <div class="report-actions"><button id="csvReportButton" type="button" class="secondary">Baixar CSV</button><button id="printReportButton" type="button" class="primary">Imprimir / salvar PDF</button></div>
+          </div>
+          <div id="reportContent" class="report-content"></div>
+        </section>
+      </section>
+    </div>
+  </main>
+  <script src="students.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="xlsx.mini.min.js?v=1"></script>
+  <script src="cloud.js?v=5"></script>
+  <script src="app.js?v=9"></script>
+</body>
+</html>
