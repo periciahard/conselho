@@ -195,7 +195,7 @@
       $('loginError').textContent = 'Informe nome e sobrenome ou um perfil da coordenação.';
       return;
     }
-    if (accessCode.length < 8) {
+    if (!accessCode) {
       $('loginError').textContent = 'Informe o código de acesso fornecido pela escola.';
       return;
     }
