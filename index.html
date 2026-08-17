@@ -41,7 +41,7 @@
         <h2>Entrar como professor</h2>
         <p id="loginIntro">Use seu nome completo e a senha fornecida pela escola.</p>
         <label><span>Login</span><input id="teacherNameInput" required minlength="5" maxlength="120" placeholder="Professor: nome completo" autocomplete="name"></label>
-        <label><span>Senha da escola</span><div class="password-field"><input id="schoolCodeInput" required type="password" minlength="8" maxlength="80" placeholder="Digite a senha padrão" autocomplete="current-password" autocapitalize="none" spellcheck="false"><button id="togglePassword" class="password-toggle" type="button" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha"><span class="password-eye" aria-hidden="true">👁</span></button></div></label>
+        <label><span>Senha da escola</span><div class="password-field"><input id="schoolCodeInput" required type="password" maxlength="80" placeholder="Digite a senha padrão" autocomplete="current-password" autocapitalize="none" spellcheck="false"><button id="togglePassword" class="password-toggle" type="button" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha"><span class="password-eye" aria-hidden="true">👁</span></button></div></label>
         <p id="loginError" class="field-error" role="alert"></p>
         <button id="loginButton" class="primary" type="submit"><span id="loginButtonText">Entrar na plataforma</span><span>→</span></button>
         <small id="loginHelp">O código é compartilhado somente com a equipe autorizada.</small>

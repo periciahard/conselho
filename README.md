@@ -26,3 +26,8 @@ O arquivo `supabase-config.js` usa apenas a chave publicável do projeto. Nunca 
 
 ## v13 — abertura responsiva
 A tela inicial foi reconstruída em HTML/CSS responsivo, com logo institucional separada, fundo em largura total e botão real de acesso.
+
+## v15
+- Removida a exigência HTML de senha mínima de 8 caracteres no login.
+- Agora códigos curtos, como `@ete`, podem ser enviados ao Supabase para validação.
+- Mantido o botão de mostrar/ocultar senha.
