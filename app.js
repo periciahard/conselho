@@ -171,6 +171,11 @@
 
   const passwordInput = $('schoolCodeInput');
   const passwordToggle = $('togglePassword');
+
+  // Limpa mensagens antigas assim que o usuário altera as credenciais.
+  // A senha não é validada por tamanho no navegador: a validação real é feita no Supabase.
+  $('teacherNameInput')?.addEventListener('input', () => { $('loginError').textContent = ''; });
+  passwordInput?.addEventListener('input', () => { $('loginError').textContent = ''; });
   passwordToggle?.addEventListener('click', () => {
     const showing = passwordInput.type === 'text';
     passwordInput.type = showing ? 'password' : 'text';
